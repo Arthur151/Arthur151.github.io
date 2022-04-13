@@ -49,9 +49,6 @@
                   <li class="nav-item">
                      <a class="nav-link js-scroll-trigger" href="#citation">Citation</a>
                   </li>
-                  <li class="nav-item">
-                     <a class="nav-link js-scroll-trigger" href="#team">Team</a>
-                  </li>
                </ul>
             </div>
          </div>
@@ -70,7 +67,7 @@
                 <div class="authors">
                     <h5>
                         <a href="https://github.com/Arthur151">Yu Sun</a><sup>1,2</sup>&nbsp;
-                        <a href="https://yz-cnsdqz.github.io/">Wu Liu</a><sup>2</sup>&nbsp;
+                        <a href="https://drliuwu.com/english.html">Wu Liu</a><sup>2</sup>&nbsp;
                         <a href="https://scholar.google.com/citations?user=vhM_c14AAAAJ&hl=zh-CN">Qian Bao</a><sup>2</sup>&nbsp;
                         <a href="http://homepage.hit.edu.cn/fuyili">Yili Fu</a><sup>1</sup>&nbsp;
                         <a href="https://taomei.me/">Tao Mei</a><sup>2</sup>
@@ -81,7 +78,7 @@
                 <div class="affiliations">
                     <h5>
                         <sup>1</sup><a href="http://en.hit.edu.cn/">Harbin Institute of Technology</a>&nbsp;
-                        <sup>2</sup><a href="https://air.jd.com/">JD AI Research, Beijing<br></a>
+                        <sup>2</sup><a href="https://corporate.jd.com/">Explore Academy of JD.com, Beijing<br></a>
                         <sup>3</sup><a href="https://ps.is.mpg.de/research/">Max Planck Institute for Intelligent Systems, Tubingen<br></a>
                         <h5>
                 </div>
@@ -91,7 +88,9 @@
                 <div class="downloads">
                     <br><h3>
                     <a class="publink" href="https://arxiv.org/pdf/2112.08274.pdf" target="_blank" style="text-decoration: none"> Paper <i class="fa fa-print"></i></a>&nbsp;&nbsp;
-                    <a class="publink" href="https://github.com/Arthur151/ROMP" target="_blank" style="text-decoration: none"> To be released Code & Dataset <i class="fa fa-github"></i></a> &nbsp;&nbsp;
+                    <a class="publink" href="https://github.com/Arthur151/ROMP" target="_blank" style="text-decoration: none"> Code <i class="fa fa-github"></i></a> &nbsp;&nbsp;
+                    <a class="publink" href="https://github.com/Arthur151/Relative_Human" target="_blank" style="text-decoration: none"> Dataset <i class="fa fa-github"></i></a> &nbsp;&nbsp;
+                    
                     <h3>
                 </div>
             </div>
@@ -114,7 +113,7 @@
                   <br><br>
                   <h2>Abstract</h2>
                   <p class="lead text-justify">
-                     Given an image with multiple people, our goal is to directly regress the pose and shape of all the people as well as their relative depth. Inferring the depth of a person in an image, however, is fundamentally ambiguous without knowing their height. This is particularly problematic when the scene contains people of very different sizes, e.g. from infants to adults. To solve this, we need several things. First, we develop a novel method to infer the poses and depth of multiple people in a single image. While previous work that estimates multiple people does so by reasoning in the image plane, our method, called BEV, adds an additional imaginary Bird’s-Eye-View representation to explicitly reason about depth. BEV reasons simultaneously about body centers in the image and in depth and, by combing these, estimates 3D body position. Unlike prior work, BEV is a single-shot method that is end-to-end differentiable. Second, height varies with age, making it impossible to resolve depth without also estimating the age of people in the image. To do so, we exploit a 3D body model space that lets BEV infer shapes from infants to adults. Third, to train BEV, we need a new dataset. Specifically, we create a “Relative Human” (RH) dataset that includes age labels and relative depth relationships between the people in the images. Extensive experiments on RH and AGORA demonstrate the effectiveness of the model and training scheme. BEV outperforms existing methods on depth reasoning, child shape estimation, and robustness to occlusion. The code and dataset will be released for research purposes.
+                     Given an image with multiple people, our goal is to directly regress the pose and shape of all the people as well as their relative depth. Inferring the depth of a person in an image, however, is fundamentally ambiguous without knowing their height. This is particularly problematic when the scene contains people of very different sizes, e.g. from infants to adults. To solve this, we need several things. First, we develop a novel method to infer the poses and depth of multiple people in a single image. While previous work that estimates multiple people does so by reasoning in the image plane, our method, called BEV, adds an additional imaginary Bird's-Eye-View representation to explicitly reason about depth. BEV reasons simultaneously about body centers in the image and in depth and, by combing these, estimates 3D body position. Unlike prior work, BEV is a single-shot method that is end-to-end differentiable. Second, height varies with age, making it impossible to resolve depth without also estimating the age of people in the image. To do so, we exploit a 3D body model space that lets BEV infer shapes from infants to adults. Third, to train BEV, we need a new dataset. Specifically, we create a "Relative Human" (RH) dataset that includes age labels and relative depth relationships between the people in the images. Extensive experiments on RH and AGORA demonstrate the effectiveness of the model and training scheme. BEV outperforms existing methods on depth reasoning, child shape estimation, and robustness to occlusion. The code and dataset are released for research purposes.
                   </p>
                   <!--<p class="lead text-justify">
                       where linear blend skinning (LBS) functions are usually applied to drive the deformation of a human body from a canonical space to a posed space.  -->
