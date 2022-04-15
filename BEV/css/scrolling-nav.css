@@ -10,7 +10,7 @@ header {
 }
 
 body {
-    font-family: 'Helvetica', serif;
+    font-family: 'Arial', serif;
 }
 
 @media (min-width: 992px) {
@@ -20,14 +20,32 @@ body {
 }
 
 h1 {
-  font-size: 4.5rem;
-  line-height: 5.5rem;
+  font-size: 4.2rem;
+  line-height: 5.2rem;
 }
 
+h2 {
+  font-size: 2rem;
+  line-height: 3rem;
+}
 
+h3 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+  line-height: 3rem;
+}
+
+h5 {
+  font-size: 1.1rem;
+  line-height: 1.6rem;
+}
 
 section {
-  padding: 50px 0;
+  padding: 10px 0;
 }
 
 section.about-section .img-wide  {
@@ -39,23 +57,8 @@ section.section-title-tc {
     margin-bottom: 50px;
 }
 
-section.team-section {
-    padding-top: 100px;
-}
-
-
-section.team-section .img-profile-small  {
-    max-width: 15rem;
-    max-height: 15rem;
-    border: 10px solid rgba(255, 255, 255, 0.5);
-}
-
-section.team-section .text-description  {
-    max-width: 15rem;
-}
-
 a {
-  color:  #808080;
+  color:  #000000;
 }
 
 a:hover, a:focus, a:active {
