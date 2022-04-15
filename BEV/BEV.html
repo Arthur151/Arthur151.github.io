@@ -8,15 +8,15 @@
       <meta name="author" content="Yu Sun">
       <title>Putting People in their Place: Monocular Regression of 3D People in Depth</title>
 
-      <!--<meta property="og:title" content="[CVPR 2022] BEV: ..." />-->
+      <!--<meta property="og:title" content="[CVPR 2022] BEV" />-->
       <!--<meta property="og:description" content="BEV is a ... ">-->
       <!--<meta property="og:image" content="images/teaser.jpg" />-->
 
       <!--<meta name="twitter:card" content="summary_large_image" />-->
-      <!--<meta name="twitter:title" content="[CVPR 2022] BEV: ..." />-->
+      <!--<meta name="twitter:title" content="[CVPR 2022] BEV: Monocular Regression of 3D People in Depth" />-->
       <!--<meta name="twitter:description" content="BEV is a ..." />-->
-      <!--<meta name="twitter:image" content="https://neuralbodies.github.io/LEAP/images/teaser1200x630.jpg" />-->
-      <!--<meta name="twitter:image:alt" content="BEV CVPR 2022" />-->
+      <!--<meta name="twitter:image" content="https://yusun.github.io/LEAP/images/teaser.jpg" />-->
+      <!--<meta name="twitter:image:alt" content="BEV [CVPR22]" />-->
 
       <!-- Bootstrap core CSS -->
       <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -106,7 +106,7 @@
                     <iframe class="embed-responsive-item" src="https://youtu.be/Q62fj_6AxRI" title="BEV: Monocular Regression of Multiple 3D People in Depth (CVPR 2022)"
                         frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <p class="lead text-justify">
+                <p class="text-justify">
                     Given an image with multiple people, our goal is to directly regress the pose and shape of all the people as well as their
                     relative depth. Inferring the depth of a person in an image, however, is fundamentally ambiguous without knowing their
                     height. This is particularly problematic when the scene contains people of very different sizes, e.g. from infants to
@@ -134,10 +134,10 @@
                     <h2>Overview</h2>
                     <div class="text-center">
                         <p>
-                            <img class="img-fluid" alt="method overview" src="images/pipeline.png">
+                            <img class="img-fluid" alt="method overview" src="images/BEV_overview.png">
                         </p>
                     </div>
-                    <p class="lead text-justify">
+                    <p class="text-justify">
                         BEV adopts a multi-head architecture. Given a single RGB image as input, BEV outputs 5 maps. For coarse-to-fine localization,
                         we use the first 4 maps, which are the Body Center heatmaps and the Localization Offset maps in the front view and bird's-eye
                         view. We first expand the front-/bird's-eye-view maps in depth/height wise and then combine them to generate the 3D Center/Offset
@@ -148,10 +148,58 @@
                         from the Mesh Feature map and add it with the depth encoding for final parameter regression. Finally, we convert the
                         estimated parameters to body meshes using the SMPL+A model.
                     </p>
+                    <div class="text-center">
+                        <p>
+                            <img class="img-fluid" alt="method overview" src="images/RH.png">
+                        </p>
+                        <p class="text-justify">
+                        Existing in-the-wild datasets lack groups of overlapping people with annotations. Since acquiring 3D annotations of large
+                        crowds is challenging, we exploit more cost-effective weak annotations. We collect a new dataset, named Relative Human (RH),
+                        to support in-the-wild monocular human depth reasoning. As shown in the figure above, we annotate the relative depth relationship between all people in the image. We treat
+                        subjects whose depth difference is less than one body-width as people in the same layer. We then classify
+                        all people into different depth layers (DLs). Unlike prior work, which labels the ordinal relationships between pairs of
+                        joints of individuals, DLs capture the depth order of multiple people. Additionally, we label people
+                        with four age categories: adults, teenagers, children, and babies. In total, we collect about 7.6K images with weak annotations
+                        of over 24.8K people. More than 21% of the subjects are young people (5.3K), including teenagers, children, and babies.
+                        To learn from these weak annotations, we develop two relative loss functions, piece-wise depth layer loss
+                        and ambiguity-compatible age loss.
+                        For more details, please refer to <a href="https://arxiv.org/abs/2112.08274">our paper</a>.
+                        
+                        </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+
+    <section id="demos" class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h2>Demos</h2>
+                    <div class="text-center">
+                        <p>
+                            <h4>Qualitative Comparisons to previous SOTAs.</h4>
+                            <img class="img-fluid" alt="demo" src="images/compare1.png">
+                            <img class="img-fluid" alt="demo" src="images/compare2.png">
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <p>
+                        <h4>Qaulitative results on Internet images.</h4>
+                        <img class="img-fluid" alt="demo" src="images/demo1.png">
+                        <img class="img-fluid" alt="demo" src="images/crowd1.png" width="50%"><img class="img-fluid" alt="demo" src="images/standing_rotating.gif" width="50%">
+                        <img class="img-fluid" alt="demo" src="images/crowd2.png" width="50%"><img class="img-fluid" alt="demo" src="images/conference_rotating.gif" width="50%">
+                        <img class="img-fluid" alt="demo" src="images/crowd3.png" width="50%"><img class="img-fluid" alt="demo" src="images/tennis_rotating.gif" width="50%">
+                    </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
       <section id="citation" class="">
          <div class="container">
@@ -171,13 +219,26 @@
          </div>
       </section>
 
+    <section id="acknowledgement" class="">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h2>Acknowledgement</h2>
+                    This work was supported by the National Key R&D Program of China under Grand No. 2020AAA0103800. <br />
+                    Disclosure: MJB has received research funds from Adobe, Intel, Nvidia, Facebook, and Amazon and has financial interests in Amazon, Datagen Technologies, and Meshcapade GmbH. While he was part-time at Amazon during this project, his research was performed solely at Max Planck.
+                    <br />This project page is modified from <a href="https://sanweiliti.github.io/LEMO/LEMO.html">this page</a>.
+                </div>
+            </div>
+        </div>
+    </section>
+
 
       <section id="contact" class="">
          <div class="container">
             <div class="row">
                <div class="col-lg-10 mx-auto">
-	                <h2>Contact</h2>
-		            <br>For questions or discussion, please contact Yu Sun: <a href="mailto:yusun@stu.hit.edu.cn">yusun@stu.hit.edu.cn</a>
+                    <h2>Contact</h2>
+                    For questions or discussion, please contact Yu Sun: <a href="mailto:yusun@stu.hit.edu.cn">yusun@stu.hit.edu.cn</a>
                </div>
             </div>
          </div>
