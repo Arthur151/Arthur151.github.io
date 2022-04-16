@@ -103,7 +103,7 @@
             <div class="row">
                <div class="col-lg-10 mx-auto">
                 <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/hunBPJxnyBU" title="BEV: Monocular Regression of Multiple 3D People in Depth (CVPR 2022)"
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Q62fj_6AxRI" title="BEV: Monocular Regression of Multiple 3D People in Depth (CVPR 2022)"
                         frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <p class="text-justify">
@@ -140,12 +140,11 @@
                     <p class="text-justify">
                         BEV adopts a multi-head architecture. Given a single RGB image as input, BEV outputs 5 maps. For coarse-to-fine localization,
                         we use the first 4 maps, which are the Body Center heatmaps and the Localization Offset maps in the front view and bird's-eye
-                        view. We first expand the front-/bird's-eye-view maps in depth/height wise and then combine them to generate the 3D Center/Offset
+                        view. We first expand the front-/bird's-eye-view maps in depth/height and then combine them to generate the 3D Center/Offset
                         maps. For coarse detection, we extract the rough 3D position of people from the 3D Center map. For fine localization,
                         we sample the offset vectors from the 3D Offset map at the corresponding 3D center position. Adding these gives the 3D
                         translation prediction. For 3D mesh parameter regression, we use the estimated 3D translation (x, y, d) and the Mesh
-                        Feature map. The depth value d of 3D translation is mapped to a depth encoding. At (x, y), we sample a feature vector
-                        from the Mesh Feature map and add it with the depth encoding for final parameter regression. Finally, we convert the
+                        Feature map. The depth value d of 3D translation is mapped to a depth encoding. At (x, y), we sample a feature vector from the Mesh Feature map and add it to the depth encoding for final parameter regression. Finally, we convert the
                         estimated parameters to body meshes using the SMPL+A model.
                     </p>
                     <div class="text-center">
@@ -181,7 +180,7 @@
                     <h2>Demos</h2>
                     <div class="text-center">
                         <p>
-                            <h4>Qualitative Comparisons to previous SOTAs.</h4>
+                            <h4>Qualitative comparison to previous SOTA methods.</h4>
                             <img class="img-fluid" alt="demo" src="images/compare1.png">
                             <img class="img-fluid" alt="demo" src="images/compare2.png">
                         </p>
@@ -209,8 +208,8 @@
 <pre style="display: block; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 4px">
 @InProceedings{BEV,
     author = {Sun, Yu and Liu, Wu and Bao, Qian and Fu, Yili and Mei, Tao and Black, Michael J.},
-    title = {Putting People in their Place: Monocular Regression of 3D People in Depth}, 
-    booktitle = {IEEE/CVF Conf. on Computer Vision and Pattern Recognition (CVPR)}, 
+    title = {Putting People in their Place: Monocular Regression of {3D} People in Depth}, 
+    booktitle = {IEEE/CVF Conf.~on Computer Vision and Pattern Recognition (CVPR)}, 
     month = jun, 
     year = {2022}}
 </pre>
