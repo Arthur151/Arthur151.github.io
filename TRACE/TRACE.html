@@ -87,6 +87,133 @@
         </div>
       </header>
 
+      <section id="about" class="about-section">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-10 mx-auto">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Q62fj_6AxRI" title="TRACE: 5D Temporal Regression of Avatars with Dynamic Cameras in 3D Environments (CVPR 2023)"
+                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <p class="text-justify">
+                  Although the estimation of 3D human pose and shape (HPS) is rapidly progressing, current methods still cannot reliably estimate 
+                  moving humans in global coordinates, which is critical for many applications. 
+                  This is particularly challenging when the camera is also moving, entangling human and camera motion. 
+                  To address these issues, we adopt a novel 5D representation (space, time, and identity) that enables end-to-end reasoning about
+                  people in scenes. Our method, called TRACE, introduces several novel architectural components. 
+                  Most importantly, it uses two new "maps" to reason about the 3D trajectory of people over time in camera, and world, coordinates. 
+                  An additional memory unit enables persistent tracking of people even during long occlusions. TRACE is the first one-stage method 
+                  to jointly recover and track 3D humans in global coordinates from dynamic cameras. 
+                  By training it end-to-end, and using full image information, TRACE achieves 
+                  state-of-the-art performance on tracking and HPS benchmarks. The code and dataset are released for research purposes.
+                </p>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <section id="overview" class="">
+         <div class="container">
+             <div class="row">
+                 <div class="col-lg-10 mx-auto">
+                     <h2>Overview</h2>
+                     <p class="text-justify">
+                        <p>
+                           <center><img class="img-fluid" alt="method overview" src="images/cam_world.gif" width="300"></center>
+                       </p>
+                        Given a video sequence captured with a dynamic camera {f<sub>i</sub>,i=1,...,N} with N frames, the user specifies K tracking subjects shown in the first frame. </p>
+                        <p>
+                           <img class="img-fluid" alt="method overview" src="images/framework.png">
+                       </p>
+                        Our goal is to simultaneously recover the 3D pose, shape, identity, and  trajectory of each subject in global coordinates.
+                        To achieve this, TRACE first extracts temporal features and then decodes each sub-task with a separate head network.
+                     </p>
+                     <p class="text-justify">
+                        First, via two parallel backbones, TRACE encodes the video and its motion into temporal image feature maps F<sup>`</sup><sub>i</sub> and motion feature maps O<sub>i</sub>.
+                     </p>
+                     <p class="text-justify">
+                        The Detection and Tracking branches take these features and perform multi-subject tracking to recover the 3D human trajectory in camera coordinates.
+                        <details>
+                           <summary>Details of the Detection branch.</summary>
+                           <p class="text-justify">
+                              Unlike BEV, our detection method takes temporal image features F<sup>`</sup><sub>i</sub> as input.
+                              It uses the features to detect the 3D human positions t<sub>i</sub> and their confidence c<sub>i</sub> for all people in frame f<sub>i</sub>. 
+                              The Mesh branch regresses all the human mesh parameters, in SMPL format, from the input Feature maps.
+                              Unlike BEV, this branch takes both temporal image features and motion features.
+                             </p>
+                        </details>
+                     </p>
+                     <p class="text-justify">
+                        <p>
+                           <img class="img-fluid" alt="method overview" src="images/mupots_tracking.gif">
+                       </p>
+                        The tracking branch estimates the 3D Motion Offset map, indicating the 3D position change of each subject from the previous frame to the current frame.
+                        From the estimated 3D detections and 3D motion offsets, a novel memory unit determines the subject identities and builds human trajectories in camera coordinates. 
+                        <details>
+                           <summary>Details of the Tracking branch.</summary>
+                           <p class="text-justify">
+                              The combined features (F<sup>`</sup><sub>i</sub>, O<sub>i</sub>) are fed to our novel Tracking branch to estimate the 3D Motion Offset map, indicating the 3D position change of each subject across frames. 
+                              The new Memory Unit takes the 3D detection and its 3D motion offset as input.
+                              It then determines the subject identities and builds human trajectories t<sub>i</sub> of the K subjects in camera coordinates. 
+                              Note that, like BEV, our detection branch finds all the people in the video frames but our goal is to track only the K input subjects.
+                              Consequently, the memory unit filters out detected people who do not match the subject trajectories.
+                             </p>
+                        </details>
+                     </p>
+                     <p class="text-justify">
+                        The Mesh branch regresses all the human mesh parameters, in SMPL format, from the temporal feature maps.
+                     </p>
+                     <p class="text-justify">
+                        Finally, to estimate subject trajectories in world coordinates, the novel World branch estimates a world motion map, representing the 3D orientation &tau;<sub>i</sub> and 3D translation offset &Delta;&Tau;<sub>i</sub> of the K subjects in global coordinates. 
+                        Starting with the 3D position of the subjects in the first frame in camera coordinates, we accumulate the 3D translation offsets &Delta;&Tau;<sub>i</sub> to obtain the global 3D trajectory &Tau; in global coordinates.
+                     </p>
+
+                     <div class="text-center">
+                        <p>
+                           <img class="img-fluid" alt="method overview" src="images/dynacam_examples.gif">
+                        </p>
+                        <p class="text-justify">
+                           Even with a powerful 5D representation, we still lack in-the-wild data for training and evaluation of global human trajectory estimation. 
+                           However, collecting global human trajectory and camera poses for natural videos captured by dynamic cameras (DC-videos) is difficult.
+                           Therefore, we create a new dataset, DynaCam, by simulating camera motions to convert in-the-wild videos captured by static cameras to DC-videos.
+                           <details>
+                              <summary>How to simulate a moving camera using videos captured by static cameras?</summary>
+                              <p class="text-justify">
+                                 <p>
+                                    <img class="img-fluid" alt="method overview" src="images/dynacam_simulation_rotating.gif">
+                                 </p>
+                                 To simulate a rotating camera, we project panoramic video frames into regular perspective views.
+                                 <p>
+                                    <img class="img-fluid" alt="method overview" src="images/dynacam_simulation_translating.gif">
+                                 </p>
+                                 To simulate the 3D translation of dynamic cameras, we use a sliding window to crop regular videos captured by a static camera.
+                                 Then we generate pseudo-ground-truth 3D human annotations via fitting SMPL to detected 2D pose sequences.
+                                 With pseudo human poses and camera pose annotations, we obtain the global human trajectories using the PnP algorithm.
+                                </p>
+                           </details>
+                        </p>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </section>
+
+     <section id="demos" class="about-section">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-10 mx-auto">
+                  <h2>Demos</h2>
+                  <div class="text-center">
+                      <p>
+                          <h4>Qualitative comparison to previous SOTA methods.</h4>
+                          <img class="img-fluid" alt="demo" src="images/demo2.gif">
+                      </p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
       <section id="citation" class="">
          <div class="container">
             <div class="row">
